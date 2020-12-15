@@ -50,9 +50,7 @@ server {
     smtp_auth none;
     xclient on;
 
-    # FIXME
-    # listen 25 ssl;
-    listen 25;
+    listen 25 ssl;
     protocol smtp;
 }
 server {
@@ -63,9 +61,7 @@ server {
     auth_http_header X-Domain {{ACTUAL_DOMAIN}};
     auth_http kolombo-auth:7089/auth;
 
-    # FIXME
-    # listen 993 ssl;
-    listen 993;
+    listen 993 ssl;
     protocol imap;
 }
 
@@ -78,9 +74,7 @@ server {
     auth_http_header X-Domain {{ACTUAL_DOMAIN}};
     auth_http kolombo-auth:7089/auth;
 
-    # FIXME
-    # listen 587 ssl;
-    listen 587;
+    listen 587 ssl;
     protocol smtp;
 }
 """
