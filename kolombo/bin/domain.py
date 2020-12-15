@@ -48,7 +48,6 @@ server {
     auth_http kolombo-auth:7089/receive;
 
     smtp_auth none;
-    xclient on;
 
     listen 25 ssl;
     protocol smtp;
