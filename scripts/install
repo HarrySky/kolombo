@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+rm -rf venv
+python3.7 -m virtualenv venv
+
+# Install package
+./venv/bin/pip install --no-cache-dir .
+
+# Testing
+./venv/bin/pip install --no-cache-dir pytest pytest-cov pytest-asyncio httpx
+# Static analysis (without changing files)
+./venv/bin/pip install --no-cache-dir mypy flake8 flake8-bugbear flake8-pie pep8-naming
+# Linting (with changing files)
+./venv/bin/pip install --no-cache-dir black isort
+# Security checks and other metrics
+./venv/bin/pip install --no-cache-dir bandit radon safety

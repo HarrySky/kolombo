@@ -1,0 +1,11 @@
+uvloop==0.14.0
+ormar==0.7.1
+databases==0.4.1
+aiosqlite==0.16.0
+cryptography==3.2.1
+fastapi==0.62.0
+uvicorn==0.12.3
+httptools==0.1.*
+
+typer==0.3.2
+rich==9.3.0

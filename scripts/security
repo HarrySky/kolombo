@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+echo -e "Code Security Checks (bandit):"
+echo
+./venv/bin/bandit --quiet -r kolombo
+echo "----------"
+
+echo -e "Dependencies Security Checks (safety):"
+echo
+./venv/bin/safety check --full-report
+echo "----------"
+
+echo -e "Checking outdated dependencies (pip):"
+echo
+./venv/bin/pip list --outdated
+echo "----------"

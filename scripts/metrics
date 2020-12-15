@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+echo -e "Cyclomatic Complexity Check (radon):"
+echo
+./venv/bin/radon cc kolombo --show-complexity --total-average
+echo "----------"
+
+echo -e "Maintainability Index Check (radon):"
+echo
+./venv/bin/radon mi kolombo --show
+echo "----------"
+
+echo -e "Compute Raw Metrics (radon):"
+echo
+./venv/bin/radon raw kolombo --summary
+echo "----------"
