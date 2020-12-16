@@ -20,6 +20,7 @@ _component_volumes = {
     "receiver": [
         "/etc/kolombo/maildirs:/var/mail",
         "/etc/kolombo/virtual:/etc/postfix/virtual",
+        "/etc/letsencrypt:/etc/letsencrypt:ro",
     ],
 }
 

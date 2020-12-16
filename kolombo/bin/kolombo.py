@@ -31,6 +31,10 @@ _virtual = {
     "addresses": "bob@example.com bob@example.com",
     "domains": "example.com",
     "mailbox": "bob@example.com bob@example.com/",
+    "ssl_map": (
+        "example.com /etc/letsencrypt/live/example.com/privkey.pem "
+        "/etc/letsencrypt/live/example.com/fullchain.pem"
+    ),
 }
 
 
@@ -59,7 +63,7 @@ def setup() -> None:
     with open("/etc/kolombo/kolombo.env", "w") as default_config:
         default_config.write(_default_env)
 
-    for file in ("addresses", "domains", "mailbox"):
+    for file in ("addresses", "domains", "mailbox", "ssl_map"):
         log.step(f"-- Writing default file to /etc/kolombo/virtual/{file}")
         with open(f"/etc/kolombo/virtual/{file}", "w") as virtual_file:
             virtual_file.write(f"{_virtual[file]}\n")

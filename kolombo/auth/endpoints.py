@@ -1,12 +1,9 @@
-from email.utils import parseaddr
-
 from fastapi import Header, Response
 
 from kolombo import conf
 from kolombo.auth._resolver import get_ip_by_host
 from kolombo.auth.credentials import check_credentials
 from kolombo.auth.protocol import AuthError, AuthSuccess
-from kolombo.models import Domain
 from kolombo.resources import log
 
 #: We only put SMTP-send and IMAP behind auth, POP3 is unsupported (and old)
