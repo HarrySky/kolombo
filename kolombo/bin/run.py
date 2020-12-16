@@ -35,8 +35,10 @@ def run_kolombo_component(component: str, build: bool) -> None:
 
     log.step(f"- Running kolombo-{component} container")
     ports = None
-    if component == "nginx":
-        ports = ["25:25", "587:587", "993:993"]
+    if component == "receiver":
+        ports = ["25:25"]
+    elif component == "nginx":
+        ports = ["587:587", "993:993"]
 
     # Attach TTY (for receiver) and run in background
     other_flags = "-t -d" if component == "receiver" else "-d"

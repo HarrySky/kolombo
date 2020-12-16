@@ -45,20 +45,6 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/{{MX_DOMAIN}}/privkey.pem;
     auth_http_header X-Secret-Key {{SECRET_KEY}};
     auth_http_header X-Domain {{ACTUAL_DOMAIN}};
-    auth_http kolombo-auth:7089/receive;
-
-    smtp_auth none;
-    xclient on;
-
-    listen 25 ssl;
-    protocol smtp;
-}
-server {
-    server_name {{MX_DOMAIN}};
-    ssl_certificate /etc/letsencrypt/live/{{MX_DOMAIN}}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{MX_DOMAIN}}/privkey.pem;
-    auth_http_header X-Secret-Key {{SECRET_KEY}};
-    auth_http_header X-Domain {{ACTUAL_DOMAIN}};
     auth_http kolombo-auth:7089/auth;
 
     listen 993 ssl;
@@ -126,8 +112,6 @@ async def add_domain(
         log.error(f"Domain pair '{mx} -> {domain}' exists")
         exit(2)
 
-    log.step("- Updating virtual domains")
-    await _update_virtual_domains()
     log.step("- Adding config to mail-enabled")
     _add_mail_enabled_config(domain, mx)
     # TODO: Do postfix reload in kolombo-receiver
@@ -140,4 +124,6 @@ async def add_domain(
     log.info(f"mail._domainkey.{domain} TXT: {_parse_txt_record(output)}")
     log.step(f"- Adding pair '{mx} -> {domain}' to database")
     await Domain.objects.create(actual=domain, mx=mx)
+    log.step("- Updating virtual domains")
+    await _update_virtual_domains()
     log.step(f"Domain pair '{mx} -> {domain}' added!")
