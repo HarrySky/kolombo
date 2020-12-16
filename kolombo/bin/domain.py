@@ -45,19 +45,6 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/{{MX_DOMAIN}}/privkey.pem;
     auth_http_header X-Secret-Key {{SECRET_KEY}};
     auth_http_header X-Domain {{ACTUAL_DOMAIN}};
-    auth_http kolombo-auth:7089/receive;
-
-    smtp_auth none;
-
-    listen 25 ssl;
-    protocol smtp;
-}
-server {
-    server_name {{MX_DOMAIN}};
-    ssl_certificate /etc/letsencrypt/live/{{MX_DOMAIN}}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{MX_DOMAIN}}/privkey.pem;
-    auth_http_header X-Secret-Key {{SECRET_KEY}};
-    auth_http_header X-Domain {{ACTUAL_DOMAIN}};
     auth_http kolombo-auth:7089/auth;
 
     listen 993 ssl;

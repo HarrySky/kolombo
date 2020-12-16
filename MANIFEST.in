@@ -1,3 +1,2 @@
 include README.md kolombo/py.typed
-include kolombo/docker/nginx/server.crt kolombo/docker/nginx/server.key
 recursive-include kolombo *.py *.sh *.conf requirements.txt virtual-* Dockerfile
