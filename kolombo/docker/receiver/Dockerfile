@@ -8,6 +8,7 @@ COPY docker/receiver/rsyslog.conf /etc/rsyslog.conf
 COPY docker/receiver/virtual-domains /etc/postfix/virtual/domains
 COPY docker/receiver/virtual-addresses /etc/postfix/virtual/addresses
 COPY docker/receiver/virtual-mailbox /etc/postfix/virtual/mailbox
+COPY docker/receiver/virtual-ssl_map /etc/postfix/virtual/ssl_map
 
 # Install needed software
 RUN apk add --no-cache rsyslog postfix dovecot tzdata openssl \
@@ -15,7 +16,7 @@ RUN apk add --no-cache rsyslog postfix dovecot tzdata openssl \
     && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "${TIMEZONE}" > /etc/timezone \
 # Generate SSL certificates
-    && openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/postfix/tls.key -out /etc/postfix/tls.crt -days 1825 -subj '/CN=kolombo-receiver'
+    && openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/postfix/tls.key -out /etc/postfix/tls.crt -days 1825 -subj '/CN=Kolombo Receiver'
 # Copy script that "checks password" (just returns OK, check MUST be on nginx level)
 COPY docker/receiver/checkpassword.sh /bin/checkpassword
 # Copy configurations
@@ -28,5 +29,6 @@ RUN touch /etc/postfix/aliases && newaliases
 EXPOSE 25/tcp 143/tcp
 CMD postmap /etc/postfix/virtual/addresses \
     && postmap /etc/postfix/virtual/mailbox \
+    && postmap -oF /etc/postfix/virtual/ssl_map \
     && chgrp -R postfix /etc/postfix/virtual \
     && postfix start && dovecot && rsyslogd -n
