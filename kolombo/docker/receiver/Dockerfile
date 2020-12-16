@@ -15,7 +15,7 @@ RUN apk add --no-cache rsyslog postfix dovecot tzdata openssl \
     && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "${TIMEZONE}" > /etc/timezone \
 # Generate SSL certificates
-    && openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/postfix/tls.key -out /etc/postfix/tls.crt -days 1825
+    && openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/postfix/tls.key -out /etc/postfix/tls.crt -days 1825 -subj '/CN=kolombo-receiver'
 # Copy script that "checks password" (just returns OK, check MUST be on nginx level)
 COPY docker/receiver/checkpassword.sh /bin/checkpassword
 # Copy configurations
