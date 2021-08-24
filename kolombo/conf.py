@@ -1,26 +1,45 @@
-import sys
-from os import R_OK, access, path
-from warnings import warn
+from kolombo.console import enable_debug
 
-from starlette.config import Config
-
-_config_file = "/etc/kolombo/kolombo.env"
-if "--conf" in sys.argv:
-    _config_file = sys.argv[sys.argv.index("--conf") + 1]
-
-if not path.exists(_config_file) or not access(_config_file, R_OK):
-    warn(f"Config file ({_config_file}) does not exist or not readable", UserWarning)
-
-_config = Config(env_file=_config_file)
-#: Whether debug is enabled
-DEBUG: bool = _config.get("DEBUG", bool, False)
-#: Secret key that should be sent in X-Secret-Key header from nginx
-NGINX_SECRET_KEY: str = _config.get("NGINX_SECRET_KEY", str, "changeme")
-#: Max number of attempts before API closes connection with client
-MAX_ATTEMPTS: int = _config.get("MAX_ATTEMPTS", int, 3)
+#: Whether debug mode is enabled
+DEBUG: bool = False
+#: Secret key that is sent in X-Secret-Key header from nginx
+NGINX_SECRET_KEY: str = "changeme"
+#: Maximum number of auth attempts before API closes connection with client
+MAX_ATTEMPTS: int = 3
 #: Salt used for passwords hashing
-SALT: bytes = _config.get("SALT", str, "changeme").encode("utf-8")
-#: Name of database file without extension
-DATABASE_NAME: str = _config.get("DATABASE_NAME", str, "kolombo")
+SALT: bytes = b"changeme"
 #: URL used to connect to database
-DATABASE_URL = f"sqlite:////etc/kolombo/{DATABASE_NAME}.sqlite"
+DATABASE_URL: str = "sqlite:////etc/kolombo/kolombo.sqlite"
+
+
+def _read_config_file(config_path: str) -> dict[str, str]:
+    """Copied from starlette.config.Config"""
+    config: dict[str, str] = {}
+    with open(config_path) as config_file:
+        for line in config_file.readlines():
+            line = line.strip()
+            if "=" in line and not line.startswith("#"):
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip().strip("\"'")
+                config[key] = value
+
+    return config
+
+
+def read_configuration() -> None:
+    config = _read_config_file("/etc/kolombo/kolombo.conf")
+
+    global DEBUG
+    DEBUG = bool(config.get("DEBUG", False))
+    if DEBUG:
+        enable_debug()
+
+    global NGINX_SECRET_KEY
+    NGINX_SECRET_KEY = config.get("NGINX_SECRET_KEY", "changeme")
+
+    global MAX_ATTEMPTS
+    MAX_ATTEMPTS = int(config.get("MAX_ATTEMPTS", 3))
+
+    global SALT
+    SALT = config.get("SALT", "changeme").encode("utf-8")

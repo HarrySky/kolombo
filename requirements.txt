@@ -1,0 +1,11 @@
+# For CLI
+typer==0.3.2
+shellingham==1.4.0
+rich==10.7.0
+docker==5.0.0
+# ORM
+ormar==0.10.16
+databases==0.4.3
+aiosqlite==0.17.0
+# Passwords hashing
+cryptography==3.4.8

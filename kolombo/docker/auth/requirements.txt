@@ -1,11 +1,16 @@
-uvloop==0.14.0
-ormar==0.7.1
-databases==0.4.1
-aiosqlite==0.16.0
-cryptography==3.2.1
-fastapi==0.62.0
-uvicorn==0.12.3
-httptools==0.1.*
-
-typer==0.3.2
-rich==9.3.0
+# Fast async event loop
+uvloop==0.16.0
+# For better output
+rich==10.7.0
+# ORM
+ormar==0.10.16
+databases==0.4.3
+aiosqlite==0.17.0
+# Passwords hashing
+cryptography==3.4.8
+# For API
+fastapi==0.68.1
+pydantic==1.8.2
+uvicorn==0.15.0
+# Since 0.12.0 uvicorn does not install httptools (and uvloop)
+httptools==0.3.0

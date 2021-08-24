@@ -10,7 +10,7 @@ find kolombo -type d -name __pycache__ -delete
 
 rm -rf dist build kolombo.egg-info
 
-python3.7 setup.py sdist bdist_wheel
+python3.9 setup.py sdist bdist_wheel
 twine upload dist/*
 
 rm -rf dist build kolombo.egg-info

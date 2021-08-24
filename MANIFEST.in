@@ -1,2 +1,4 @@
-include README.md kolombo/py.typed
-recursive-include kolombo *.py *.sh *.conf requirements.txt virtual-* Dockerfile
+include requirements.txt README.md logo.png kolombo/py.typed
+recursive-include kolombo *.py
+recursive-include kolombo_auth *.py
+recursive-include kolombo/docker *

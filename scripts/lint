@@ -3,12 +3,12 @@ set -e
 
 echo -e "Linting (black):"
 echo
-./venv/bin/black --target-version=py37 kolombo tests setup.py
+./venv/bin/black --target-version=py39 kolombo tests setup.py
 echo "----------"
 
 echo -e "Sorting Imports (isort):"
 echo
-./venv/bin/isort --project=citylight kolombo tests setup.py
+./venv/bin/isort --project=kolombo kolombo tests setup.py
 echo "----------"
 
 echo -e "Static Types Check After Linting (mypy):"

@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+black --target-version=py39 --check kolombo tests setup.py
+mypy kolombo
+isort --project=kolombo --check kolombo tests setup.py
+flake8 kolombo

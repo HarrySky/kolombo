@@ -1,0 +1,9 @@
+FROM alpine:3.14
+LABEL maintainer="Igor Nehoroshev <hi@neigor.me>"
+
+RUN apk add --no-cache opendkim-utils
+RUN mkdir /etc/opendkim/keys
+WORKDIR /etc/opendkim/keys
+COPY docker/dkim-gen/gen_key.sh /bin/gen_key
+
+ENTRYPOINT ["/bin/gen_key"]

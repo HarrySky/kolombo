@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  kolombo-receiver:
+    image: kolombo-receiver:latest
+    tty: true
+    restart: always
+    container_name: kolombo-receiver
+    hostname: kolombo-receiver
+    ports:
+      # Default SMTP port (receive mail)
+      - 0.0.0.0:25:25/tcp
+    volumes:
+      - /etc/kolombo/maildirs:/var/mail
+      - /etc/kolombo/virtual:/etc/postfix/virtual_files
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      kolombo-net:
+        ipv4_address: 192.168.79.100
+
+  kolombo-auth:
+    image: kolombo-auth:latest
+    restart: always
+    container_name: kolombo-auth
+    hostname: kolombo-auth
+    volumes:
+      - /etc/kolombo:/etc/kolombo
+    depends_on:
+      - kolombo-receiver
+    networks:
+      kolombo-net:
+        ipv4_address: 192.168.79.110
+
+  kolombo-nginx:
+    image: kolombo-nginx:latest
+    restart: always
+    container_name: kolombo-nginx
+    hostname: kolombo-nginx
+    ports:
+      # Encrypted SMTP port (send mail)
+      - 0.0.0.0:465:465/tcp
+      # Encrypted IMAP port (read mail)
+      - 0.0.0.0:993:993/tcp
+      # Encrypted POP3 port (read mail, legacy)
+      - 0.0.0.0:995:995/tcp
+    volumes:
+      - /etc/kolombo/mail-enabled:/etc/nginx/mail-enabled
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - kolombo-auth
+    networks:
+      kolombo-net:
+        ipv4_address: 192.168.79.120
+
+networks:
+  kolombo-net:
+    name: kolombo-net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.79.0/24
+          gateway: 192.168.79.1

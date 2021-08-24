@@ -1,0 +1,58 @@
+stages:
+  - tests
+
+variables:
+  PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.cache/pip"
+
+cache:
+  key: "${CI_JOB_STAGE}-${CI_COMMIT_REF_SLUG}-pip"
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - pip install virtualenv && virtualenv venv && source venv/bin/activate
+
+check_style:
+  stage: tests
+  tags:
+  - docker-other
+  image: python:3.9-slim
+  script:
+  - pip install -r requirements.txt
+  - pip install -r .ci/auth-requirements.txt
+  - pip install -r .ci/style-requirements.txt
+  - bash .ci/check_style
+  only:
+    refs:
+    - main
+    - merge_requests
+    changes:
+    - requirements.txt
+    - setup.py
+    - kolombo/**/*
+    - tests/**/*
+    - .ci/*
+    - .gitlab-ci.yml
+
+check_security:
+  stage: tests
+  tags:
+  - docker-other
+  image: python:3.9-slim
+  script:
+  - pip install -r requirements.txt
+  - pip install -r .ci/auth-requirements.txt
+  - pip install -r .ci/security-requirements.txt
+  - bash .ci/check_security
+  only:
+    refs:
+    - main
+    - merge_requests
+    changes:
+    - requirements.txt
+    - setup.py
+    - kolombo/**/*
+    - tests/**/*
+    - .ci/*
+    - .gitlab-ci.yml

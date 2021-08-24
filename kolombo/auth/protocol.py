@@ -9,10 +9,10 @@ class AuthSuccess(Response):
     """
     Response that MUST be returned after successful auth.
 
-    **Parameters:**
+    Parameters:
 
-    * **server_ip** - IP that nginx will use to access real SMTP/IMAP server.
-    * **server_port** - port that nginx will use to access real SMTP/IMAP server.
+    * server_ip - IP that nginx will use to access real SMTP/IMAP server.
+    * server_port - port that nginx will use to access real SMTP/IMAP server.
     """
 
     def __init__(self, server_ip: str, server_port: int) -> None:
@@ -28,13 +28,13 @@ class AuthError(Response):
     """
     Response that MUST be returned when auth error occured.
 
-    **Parameters:**
+    Parameters:
 
-    * **status** - status that explains error that happened.
-    * **retry** - *(optional)* whether client can retry (default behaviour)
+    * status - status that explains error that happened.
+    * retry - *(optional)* whether client can retry (default behaviour)
     or connection will be closed.
-    * **wait** - *(optional)* seconds to wait if client can retry (default - 2).
-    * **error_code** - *(optional)* error code that will be used in SMTP case
+    * wait - *(optional)* seconds to wait if client can retry (default - 2).
+    * error_code - *(optional)* error code that will be used in SMTP case
     (default - "535 5.7.0", a.k.a. "Authentication Failed").
     """
 

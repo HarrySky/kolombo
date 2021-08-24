@@ -1,0 +1,26 @@
+FROM alpine:3.14
+LABEL maintainer="Igor Nehoroshev <hi@neigor.me>"
+
+# Install needed software
+RUN apk add --no-cache rsyslog postfix dovecot dovecot-pop3d openssl \
+# Generate SSL certificate (to fallback to if TLS SNI did not found proper one)
+    && openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/postfix/tls.key -out /etc/postfix/tls.crt -days 1825 -subj '/CN=Kolombo Receiver'
+# Copy script that "checks password" (just returns OK, check MUST be on nginx mail proxy level)
+COPY docker/receiver/checkpassword.sh /bin/checkpassword
+# Copy script that updates postmap
+COPY docker/receiver/update_map.sh /bin/update_map
+COPY docker/receiver/start_receiver.sh /bin/start_receiver
+# Copy configurations
+COPY docker/receiver/rsyslog.conf /etc/rsyslog.conf
+COPY docker/receiver/dovecot.conf /etc/dovecot/dovecot.conf
+COPY docker/receiver/postfix.conf /etc/postfix/main.cf
+# Create aliases, so that Postfix stop giving warnings
+RUN touch /etc/postfix/aliases && newaliases
+# Volume should be attached to /etc/postfix/virtual_files
+RUN mkdir /etc/postfix/virtual_files && cd /etc/postfix/virtual_files && touch domains addresses mailbox ssl_map
+
+# 25 for SMTP (receive, direct)
+# 143 for IMAP (read mail, through nginx mail proxy)
+# 110 for POP3 (read mail legacy, through nginx mail proxy)
+EXPOSE 25/tcp 143/tcp 110/tcp
+CMD ["/bin/start_receiver"]

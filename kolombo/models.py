@@ -1,8 +1,17 @@
-from typing import List
-
+from databases import Database
 from ormar import Boolean, Integer, Model, String
+from sqlalchemy import MetaData, create_engine  # type: ignore[import]
 
-from kolombo.resources import database, metadata
+from kolombo import conf
+
+database = Database(conf.DATABASE_URL)
+metadata = MetaData()
+
+
+async def init_database() -> None:
+    await database.connect()
+    engine = create_engine(conf.DATABASE_URL)
+    metadata.create_all(engine)
 
 
 class Domain(Model):
@@ -20,8 +29,8 @@ class Domain(Model):
     active: bool = Boolean(default=True)
 
     @classmethod
-    async def all_active(cls) -> List["Domain"]:
-        return await cls.objects.filter(active=True).all()  # type: ignore[return-value]
+    async def all_active(cls) -> list["Domain"]:
+        return await cls.objects.filter(active=True).all()
 
 
 class User(Model):
@@ -41,5 +50,5 @@ class User(Model):
     active: bool = Boolean(default=True)
 
     @classmethod
-    async def all_active(cls) -> List["User"]:
-        return await cls.objects.filter(active=True).all()  # type: ignore[return-value]
+    async def all_active(cls) -> list["User"]:
+        return await cls.objects.filter(active=True).all()

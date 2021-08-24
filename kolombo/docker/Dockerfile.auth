@@ -1,0 +1,15 @@
+FROM python:3.9-slim
+LABEL maintainer="Igor Nehoroshev <hi@neigor.me>"
+
+# Volume MUST be attached to /etc/kolombo
+RUN mkdir /app /etc/kolombo
+COPY . /app/kolombo
+WORKDIR /app
+
+COPY docker/auth/requirements.txt /app/requirements.txt
+COPY docker/auth/run_auth_api.sh /bin/run_auth_api
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 7089/tcp
+
+CMD ["/bin/run_auth_api"]

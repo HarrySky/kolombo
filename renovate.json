@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "groupName": "all",
+      "matchManagers": ["pip_requirements"],
+      "matchFiles": ["requirements.txt", "./kolombo/docker/auth/requirements.txt"],
+      "schedule": ["before 5pm"]
+    },
+    {
+      "groupName": "ci-all",
+      "matchManagers": ["pip_requirements"],
+      "matchFiles": [".ci/style-requirements.txt", ".ci/security-requirements.txt"],
+      "schedule": ["before 5pm"]
+    },
+    {
+      "groupName": "docker-images",
+      "matchDatasources": ["docker"],
+      "schedule": ["before 5pm"]
+    }
+  ]
+}
