@@ -1,3 +1,5 @@
+from typing import List
+
 from databases import Database
 from ormar import Boolean, Integer, Model, String
 from sqlalchemy import MetaData, create_engine  # type: ignore[import]
@@ -29,7 +31,7 @@ class Domain(Model):
     active: bool = Boolean(default=True)
 
     @classmethod
-    async def all_active(cls) -> list["Domain"]:
+    async def all_active(cls) -> List["Domain"]:
         return await cls.objects.filter(active=True).all()
 
 
@@ -50,5 +52,5 @@ class User(Model):
     active: bool = Boolean(default=True)
 
     @classmethod
-    async def all_active(cls) -> list["User"]:
+    async def all_active(cls) -> List["User"]:
         return await cls.objects.filter(active=True).all()

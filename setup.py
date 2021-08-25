@@ -22,7 +22,7 @@ def get_long_description():
 
 setup(
     name="kolombo",
-    python_requires=">=3.9",
+    python_requires=">=3.8",
     version=get_version("kolombo"),
     description="Kolombo - CLI for easy mail server managing 💌",
     long_description=get_long_description(),
@@ -53,6 +53,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Topic :: Communications :: Email",
         "Typing :: Typed",

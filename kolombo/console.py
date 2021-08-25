@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 from rich.console import Console
 from rich.markdown import Markdown
@@ -28,7 +28,7 @@ def info(message: str) -> None:
     _console.print(message)
 
 
-def print_list(list_to_print: list[Any]) -> None:
+def print_list(list_to_print: List[Any]) -> None:
     _console.print(Markdown(f"*  {'* '.join(list_to_print)}"))
 
 

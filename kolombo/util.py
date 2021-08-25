@@ -1,20 +1,25 @@
 import sys
 from asyncio import run as run_async
 from functools import wraps
-from importlib.resources import files
+
+if sys.version_info >= (3, 9):
+    from importlib.resources import files
+else:
+    from importlib_resources import files
+
 from os import execvp, getuid
 from os.path import realpath
 
 # Security implications are considered
 from subprocess import STDOUT, check_output  # nosec: B404
-from typing import Any, Awaitable, Callable
+from typing import Any, Awaitable, Callable, List
 
 from docker import DockerClient  # type: ignore[import]
 
 from kolombo.console import step, warning
 
 
-def run(command: list[str], as_root: bool = False) -> str:
+def run(command: List[str], as_root: bool = False) -> str:
     if as_root and getuid() != 0:
         command.insert(0, "sudo")
 
@@ -71,12 +76,27 @@ def build_kolombo_image(client: DockerClient, service: str) -> None:
     )
 
 
+def up_all_kolombo_services() -> None:
+    project_name = "kolombo_services"
+    docker_folder = files("kolombo") / "docker"
+    file_path = str(docker_folder / "services" / "docker-compose.yml")
+    compose_command = ["docker-compose", "-p", project_name, "-f", file_path, "up"]
+    run([*compose_command, "--force-recreate", "-d"])
+
+
 def up_kolombo_service(service: str) -> None:
     project_name = "kolombo_services"
     docker_folder = files("kolombo") / "docker"
     file_path = str(docker_folder / "services" / "docker-compose.yml")
     compose_command = ["docker-compose", "-p", project_name, "-f", file_path, "up"]
     run([*compose_command, "--no-deps", "--force-recreate", "-d", f"kolombo-{service}"])
+
+
+def stop_all_kolombo_services() -> None:
+    project_name = "kolombo_services"
+    docker_folder = files("kolombo") / "docker"
+    file_path = str(docker_folder / "services" / "docker-compose.yml")
+    run(["docker-compose", "-p", project_name, "-f", file_path, "down"])
 
 
 def stop_kolombo_service(service: str) -> None:

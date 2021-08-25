@@ -1,3 +1,5 @@
+from typing import Dict
+
 from kolombo.console import enable_debug
 
 #: Whether debug mode is enabled
@@ -12,9 +14,9 @@ SALT: bytes = b"changeme"
 DATABASE_URL: str = "sqlite:////etc/kolombo/kolombo.sqlite"
 
 
-def _read_config_file(config_path: str) -> dict[str, str]:
+def _read_config_file(config_path: str) -> Dict[str, str]:
     """Copied from starlette.config.Config"""
-    config: dict[str, str] = {}
+    config: Dict[str, str] = {}
     with open(config_path) as config_file:
         for line in config_file.readlines():
             line = line.strip()

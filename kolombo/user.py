@@ -1,5 +1,5 @@
 from base64 import b64encode
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from typer import Argument, Typer, prompt
@@ -34,7 +34,7 @@ async def _save_user(email: str, password: str, domain: str) -> None:
     await User.objects.create(email=email, password=b64_password, domain=domain)
 
 
-def update_virtual_files(active_users: list["User"]) -> None:
+def update_virtual_files(active_users: List["User"]) -> None:
     emails = [user.email for user in active_users]
     addresses = "\n".join(f"{email} {email}" for email in emails)
     with open("/etc/kolombo/virtual/addresses", mode="w") as addresses_file:

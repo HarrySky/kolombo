@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from typer import Argument, Typer
 
@@ -29,7 +29,7 @@ async def list_domains() -> None:
         print_list(active_pairs)
 
 
-def update_virtual_files(active_domains: list["Domain"]) -> None:
+def update_virtual_files(active_domains: List["Domain"]) -> None:
     domains = (domain.actual for domain in active_domains)
     virtual_domains = generate_virtual_domains(domains)
     with open("/etc/kolombo/virtual/domains", mode="w") as virtual_domains_file:

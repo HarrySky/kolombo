@@ -9,3 +9,5 @@ databases==0.4.3
 aiosqlite==0.17.0
 # Passwords hashing
 cryptography==3.4.8
+# Backport for Python versions before 3.9
+importlib-resources==5.2.2 ; python_version < "3.9"
