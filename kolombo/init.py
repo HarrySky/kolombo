@@ -3,6 +3,7 @@ from os import getgid, getuid
 from pathlib import Path
 from pwd import getpwuid
 
+from click.types import IntParamType
 from typer import confirm, prompt
 
 from kolombo.console import debug, enable_debug, finished, info, started, step
@@ -48,7 +49,7 @@ def init() -> None:
         "Enter maximum auth attempts per one session",
         default="3",
         show_default=True,
-        type=int,
+        type=IntParamType(),
     )
     passwords_salt: str = prompt(
         "Enter secret key to be used as salt for passwords hashing",

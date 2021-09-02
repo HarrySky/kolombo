@@ -6,7 +6,7 @@
     {
       "groupName": "all",
       "matchManagers": ["pip_requirements"],
-      "matchFiles": ["requirements.txt", "./kolombo/docker/auth/requirements.txt"],
+      "matchFiles": ["requirements.txt", "kolombo/docker/auth/requirements.txt"],
       "schedule": ["before 5pm"]
     },
     {
