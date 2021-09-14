@@ -3,7 +3,7 @@ mypy==0.910
 types-setuptools==57.0.2
 # Flake8 with extensions
 flake8==3.9.2
-flake8-bugbear==21.4.3
+flake8-bugbear==21.9.1
 flake8-pie==0.15.0
 pep8-naming==0.12.1
 flake8-simplify==0.14.1

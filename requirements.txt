@@ -4,8 +4,8 @@ shellingham==1.4.0
 rich==10.9.0
 docker==5.0.2
 # ORM
-ormar==0.10.18
-databases==0.5.0
+ormar==0.10.19
+databases==0.5.2
 aiosqlite==0.17.0
 # Passwords hashing
 cryptography==3.4.8

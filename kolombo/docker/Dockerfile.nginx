@@ -1,4 +1,4 @@
-FROM nginx:1.21.1-alpine
+FROM nginx:1.21.3-alpine
 LABEL maintainer="Igor Nehoroshev <hi@neigor.me>"
 
 RUN apk add --no-cache nginx-mod-mail && mkdir /etc/nginx/mail-enabled

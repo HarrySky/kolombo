@@ -3,8 +3,8 @@ uvloop==0.16.0
 # For better output
 rich==10.9.0
 # ORM
-ormar==0.10.18
-databases==0.5.0
+ormar==0.10.19
+databases==0.5.2
 aiosqlite==0.17.0
 # Passwords hashing
 cryptography==3.4.8
