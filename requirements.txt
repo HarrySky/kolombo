@@ -1,5 +1,6 @@
 # For CLI
 typer==0.4.0
+click==8.0.1
 shellingham==1.4.0
 rich==10.9.0
 docker==5.0.2
