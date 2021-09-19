@@ -1,6 +1,6 @@
 # Static type check analysis
 mypy==0.910
-types-setuptools==57.0.2
+types-setuptools==57.4.0
 # Flake8 with extensions
 flake8==3.9.2
 flake8-bugbear==21.9.1
