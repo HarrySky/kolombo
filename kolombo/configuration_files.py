@@ -68,7 +68,7 @@ def generate_senders_compose_config(domains: Iterable[str]) -> str:
             "    tty: true\n"
             "    restart: always\n"
             f"    container_name: kolombo-{domain}-sender\n"
-            f"    hostname: {domain}\n"
+            f"    hostname: kolombo.{domain}\n"
             "    volumes:\n"
             f"      - /etc/kolombo/dkim_keys/{domain}:/etc/opendkim/keys/{domain}\n"
             "    networks:\n"
