@@ -46,7 +46,7 @@ kolombo run auth  # Authenticates SMTP/POP3/IMAP users from nginx
 kolombo run nginx  # Listens on 465 (SMTP), 993 (IMAP) and 995 (POP3)
 kolombo run senders  # Send emails from users that come through nginx 465 port
 
-# ... or deploy all everything at once
+# ... or deploy everything at once
 kolombo run all
 
 # Stop all Kolombo services and senders

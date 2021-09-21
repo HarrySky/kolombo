@@ -1,0 +1,19 @@
+site_name: Kolombo
+site_description: CLI for easy mail server managing 💌
+site_url: https://docs.neigor.me/kolombo/
+
+theme:
+  name: 'material'
+
+repo_name: HarrySky/kolombo
+repo_url: https://github.com/HarrySky/kolombo
+edit_uri: ""
+
+nav:
+  - Introduction: 'index.md'
+  - Quick Start: 'quickstart.md'
+
+markdown_extensions:
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - mkautodoc

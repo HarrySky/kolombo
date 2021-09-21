@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+# Build docs
+./venv/bin/mkdocs build

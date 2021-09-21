@@ -1,5 +1,5 @@
 stages:
-  - tests
+  - checks
 
 variables:
   PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.cache/pip"
@@ -12,15 +12,15 @@ cache:
 
 before_script:
   - pip install virtualenv && virtualenv venv && source venv/bin/activate
+  - pip install -r requirements.txt
+  - pip install -r .ci/auth-requirements.txt
 
-check_style:
-  stage: tests
+check_style_39:
+  stage: checks
   tags:
   - docker-other
   image: python:3.9-slim
   script:
-  - pip install -r requirements.txt
-  - pip install -r .ci/auth-requirements.txt
   - pip install -r .ci/style-requirements.txt
   - bash .ci/check_style
   only:
@@ -31,18 +31,15 @@ check_style:
     - requirements.txt
     - setup.py
     - kolombo/**/*
-    - tests/**/*
     - .ci/*
     - .gitlab-ci.yml
 
-check_security:
-  stage: tests
+check_security_39:
+  stage: checks
   tags:
   - docker-other
   image: python:3.9-slim
   script:
-  - pip install -r requirements.txt
-  - pip install -r .ci/auth-requirements.txt
   - pip install -r .ci/security-requirements.txt
   - bash .ci/check_security
   only:
@@ -53,6 +50,45 @@ check_security:
     - requirements.txt
     - setup.py
     - kolombo/**/*
-    - tests/**/*
+    - .ci/*
+    - .gitlab-ci.yml
+
+# As we support Python 3.8 with backport - check it as well
+
+check_style_38:
+  stage: checks
+  tags:
+  - docker-other
+  image: python:3.8-slim
+  script:
+  - pip install -r .ci/style-requirements.txt
+  - bash .ci/check_style
+  only:
+    refs:
+    - main
+    - merge_requests
+    changes:
+    - requirements.txt
+    - setup.py
+    - kolombo/**/*
+    - .ci/*
+    - .gitlab-ci.yml
+
+check_security_38:
+  stage: checks
+  tags:
+  - docker-other
+  image: python:3.8-slim
+  script:
+  - pip install -r .ci/security-requirements.txt
+  - bash .ci/check_security
+  only:
+    refs:
+    - main
+    - merge_requests
+    changes:
+    - requirements.txt
+    - setup.py
+    - kolombo/**/*
     - .ci/*
     - .gitlab-ci.yml

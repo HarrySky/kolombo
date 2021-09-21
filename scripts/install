@@ -5,11 +5,12 @@ rm -rf venv
 python3.8 -m virtualenv venv
 
 # Install all requirements
-./venv/bin/pip install --no-cache-dir -r requirements.txt
-./venv/bin/pip install --no-cache-dir -r .ci/auth-requirements.txt
-./venv/bin/pip install --no-cache-dir -r .ci/style-requirements.txt
-./venv/bin/pip install --no-cache-dir -r .ci/security-requirements.txt
+./venv/bin/pip install -r requirements.txt
+./venv/bin/pip install -r .ci/auth-requirements.txt
+./venv/bin/pip install -r .ci/style-requirements.txt
+./venv/bin/pip install -r .ci/security-requirements.txt
+./venv/bin/pip install -r docs-requirements.txt
 # Install radon for `metrics` script
-./venv/bin/pip install --no-cache-dir radon
+./venv/bin/pip install radon
 # Install kolombo package
-./venv/bin/pip install --no-cache-dir .
+./venv/bin/pip install .

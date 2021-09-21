@@ -30,7 +30,7 @@ setup(
     url="https://github.com/HarrySky/kolombo",
     project_urls={
         "Documentation": "https://docs.neigor.me/kolombo",
-        "Changelog": "https://github/HarrySky/kolombo/blob/main/README.md",
+        "Changelog": "https://github/HarrySky/kolombo/blob/main/CHANGELOG.md",
         "Source": "https://github.com/HarrySky/kolombo",
         "Tracker": "https://github.com/HarrySky/kolombo/issues",
     },
