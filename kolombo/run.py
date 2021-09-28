@@ -24,6 +24,7 @@ async def run_all() -> None:
     from kolombo.models import Domain
 
     client = from_env()
+    build_kolombo_image(client, "rspamd")
     build_kolombo_image(client, "receiver")
     build_kolombo_image(client, "auth")
     build_kolombo_image(client, "nginx")
@@ -54,9 +55,12 @@ async def run_all() -> None:
 @execute_as_root
 def run_receiver() -> None:
     client = from_env()
+    build_kolombo_image(client, "rspamd")
     build_kolombo_image(client, "receiver")
 
     step("Bringing up receiver service")
+    up_kolombo_service("redis")
+    up_kolombo_service("rspamd")
     up_kolombo_service("receiver")
 
 

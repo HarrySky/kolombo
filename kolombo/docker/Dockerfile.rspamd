@@ -1,0 +1,11 @@
+FROM alpine:3.14
+LABEL maintainer="Igor Nehoroshev <hi@neigor.me>"
+
+RUN apk add --no-cache rspamd rspamd-controller rspamd-proxy rspamd-fuzzy ca-certificates curl
+RUN mkdir /run/rspamd
+
+COPY docker/rspamd /etc/rspamd/local.d
+
+EXPOSE 11332/tcp 11334/tcp 11335/tcp
+
+CMD [ "rspamd", "-i" ]

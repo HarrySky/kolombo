@@ -2,7 +2,7 @@
 typer==0.4.0
 click==8.0.1
 shellingham==1.4.0
-rich==10.10.0
+rich==10.11.0
 docker==5.0.2
 # ORM
 ormar==0.10.19

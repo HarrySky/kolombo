@@ -1,5 +1,28 @@
 version: '3.8'
 services:
+  kolombo-redis:
+    image: redis:6.2
+    restart: always
+    container_name: kolombo-redis
+    hostname: kolombo-redis
+    networks:
+      kolombo-net:
+        ipv4_address: 192.168.79.90
+
+  kolombo-rspamd:
+    image: kolombo-rspamd:latest
+    tty: true
+    restart: always
+    container_name: kolombo-rspamd
+    hostname: kolombo-rspamd
+    volumes:
+      - /etc/kolombo/rspamd:/var/lib/rspamd
+    depends_on:
+      - kolombo-redis
+    networks:
+      kolombo-net:
+        ipv4_address: 192.168.79.95
+
   kolombo-receiver:
     image: kolombo-receiver:latest
     tty: true
@@ -13,6 +36,8 @@ services:
       - /etc/kolombo/maildirs:/var/mail
       - /etc/kolombo/virtual:/etc/postfix/virtual_files
       - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - kolombo-rspamd
     networks:
       kolombo-net:
         ipv4_address: 192.168.79.100

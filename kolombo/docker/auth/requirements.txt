@@ -1,7 +1,7 @@
 # Fast async event loop
 uvloop==0.16.0
 # For better output
-rich==10.10.0
+rich==10.11.0
 # ORM
 ormar==0.10.19
 databases==0.5.2
