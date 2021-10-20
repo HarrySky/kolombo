@@ -1,15 +1,15 @@
 # Fast async event loop
 uvloop==0.16.0
 # For better output
-rich==10.10.0
+rich==10.12.0
 # ORM
-ormar==0.10.19
-databases==0.5.2
+ormar==0.10.22
+databases==0.5.3
 aiosqlite==0.17.0
 # Passwords hashing
-cryptography==3.4.8
+cryptography==35.0.0
 # For API
-fastapi==0.68.1
+fastapi==0.70.0
 pydantic==1.8.2
 uvicorn==0.15.0
 # Since 0.12.0 uvicorn does not install httptools (and uvloop)

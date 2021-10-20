@@ -16,6 +16,12 @@
       "schedule": ["before 5pm"]
     },
     {
+      "groupName": "docs-all",
+      "matchManagers": ["pip_requirements"],
+      "matchFiles": ["docs-requirements.txt"],
+      "schedule": ["before 5pm"]
+    },
+    {
       "groupName": "docker-images",
       "matchDatasources": ["docker"],
       "schedule": ["before 5pm"]

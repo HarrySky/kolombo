@@ -12,6 +12,17 @@ But during development it is considered [0Ver](https://0ver.org).
 
 ## Unreleased
 
+### Changed
+
+- Update dependency `fastapi` to 0.70.0
+- Update dependency `click` to 8.0.3
+- Update dependency `rich` to 10.12.0
+- Update dependency `docker` to 5.0.3
+- Update dependency `ormar` to 0.10.22
+- Update dependency `databases` to 0.5.3
+- Update dependency `cryptography` to 35.0.0
+- Update dependency `importlib-resources` to 5.3.0
+
 <!--
 ### Security
 
